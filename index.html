@@ -1,0 +1,1901 @@
+<!DOCTYPE html>
+<html lang="ckb" dir="rtl" id="htmlRoot">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title id="pageTitle">سیستەمی قەرز و دانەوە - بەشی بەڕێوەبەر</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Vazirmatn -->
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #f8fafc;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 4px;
+        }
+
+        /* Custom Sparkle Button Responsive */
+        .custom-sparkle-btn {
+            border: none;
+            width: 100%;
+            max-width: 15em;
+            height: 4.5em;
+            border-radius: 3em;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            background: #1C1A1C;
+            cursor: pointer;
+            transition: all 450ms ease-in-out;
+        }
+
+        .sparkle {
+            fill: #AAAAAA;
+            transition: all 800ms ease;
+        }
+
+        .btn-text {
+            font-weight: 600;
+            color: #AAAAAA;
+            font-size: 13px;
+        }
+
+        .custom-sparkle-btn:hover {
+            background: linear-gradient(0deg,#A47CF3,#683FEA);
+            box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.4),
+            inset 0px -4px 0px 0px rgba(0, 0, 0, 0.2),
+            0px 0px 0px 4px rgba(255, 255, 255, 0.2),
+            0px 0px 180px 0px #9917FF;
+            transform: translateY(-2px);
+        }
+
+        .custom-sparkle-btn:hover .btn-text {
+            color: white;
+        }
+
+        .custom-sparkle-btn:hover .sparkle {
+            fill: white;
+            transform: scale(1.2);
+        }
+
+        /* Cosmic Search Responsive */
+        .galaxy {
+            height: 600px;
+            width: 600px;
+            background-image: radial-gradient(#ffffff 1px, transparent 1px),
+                radial-gradient(#ffffff 1px, transparent 1px);
+            background-size: 50px 50px;
+            background-position: 0 0, 25px 25px;
+            position: absolute;
+            z-index: -1;
+            animation: twinkle 5s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+
+        .stardust, .cosmic-ring, .starfield, .nebula {
+            max-height: 70px;
+            max-width: 100%;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            overflow: hidden;
+            z-index: -1;
+            border-radius: 12px;
+            filter: blur(3px);
+        }
+
+        .input {
+            background-color: #05071b;
+            border: none;
+            width: 100%;
+            max-width: 280px;
+            height: 52px;
+            border-radius: 10px;
+            color: #a9c7ff;
+            padding-inline: 50px;
+            font-size: 15px;
+        }
+        @media(min-width: 768px) {
+            .input {
+                max-width: 301px;
+                font-size: 17px;
+                padding-inline: 59px;
+            }
+        }
+        [dir="rtl"] .input { text-align: right; }
+        [dir="ltr"] .input { text-align: left; }
+
+        #search-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 100%;
+            max-width: 301px;
+        }
+
+        .input::placeholder {
+            color: #6e8cff;
+        }
+
+        .input:focus {
+            outline: none;
+        }
+
+        #main:focus-within > #input-mask {
+            display: none;
+        }
+
+        #input-mask {
+            pointer-events: none;
+            width: 80px;
+            height: 20px;
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #05071b);
+            top: 16px;
+        }
+        [dir="rtl"] #input-mask { right: 60px; }
+        [dir="ltr"] #input-mask { left: 60px; }
+
+        #cosmic-glow {
+            pointer-events: none;
+            width: 25px;
+            height: 20px;
+            position: absolute;
+            background: #4d6dff;
+            top: 10px;
+            filter: blur(20px);
+            opacity: 0.8;
+            transition: all 2s;
+        }
+        [dir="rtl"] #cosmic-glow { right: 5px; }
+        [dir="ltr"] #cosmic-glow { left: 5px; }
+
+        #main:hover > #cosmic-glow {
+            opacity: 0;
+        }
+
+        .stardust::before {
+            content: "";
+            z-index: -2;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(83deg);
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            filter: brightness(1.4);
+            background-image: conic-gradient(
+                rgba(0, 0, 0, 0) 0%,
+                #4d6dff,
+                rgba(0, 0, 0, 0) 8%,
+                rgba(0, 0, 0, 0) 50%,
+                #6e8cff,
+                rgba(0, 0, 0, 0) 58%
+            );
+            transition: all 2s;
+        }
+
+        .cosmic-ring::before {
+            content: "";
+            z-index: -2;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(70deg);
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            filter: brightness(1.3);
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            background-image: conic-gradient(
+                #05071b,
+                #4d6dff 5%,
+                #05071b 14%,
+                #05071b 50%,
+                #6e8cff 60%,
+                #05071b 64%
+            );
+            transition: all 2s;
+        }
+
+        .starfield::before {
+            content: "";
+            z-index: -2;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(82deg);
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            background-image: conic-gradient(
+                rgba(0, 0, 0, 0),
+                #1c2452,
+                rgba(0, 0, 0, 0) 10%,
+                rgba(0, 0, 0, 0) 50%,
+                #2a3875,
+                rgba(0, 0, 0, 0) 60%
+            );
+            transition: all 2s;
+        }
+
+        .nebula:before {
+            content: "";
+            z-index: -2;
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(60deg);
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            background-image: conic-gradient(
+                #000,
+                #4d6dff 5%,
+                #000 38%,
+                #000 50%,
+                #6e8cff 60%,
+                #000 87%
+            );
+            transition: all 2s;
+        }
+
+        #wormhole-icon {
+            position: absolute;
+            top: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+            height: 38px;
+            width: 36px;
+            isolation: isolate;
+            overflow: hidden;
+            border-radius: 10px;
+            background: linear-gradient(180deg, #1c2452, #05071b, #2a3875);
+            border: 1px solid transparent;
+        }
+        [dir="rtl"] #wormhole-icon { left: 7px; }
+        [dir="ltr"] #wormhole-icon { right: 7px; }
+
+        .wormhole-border {
+            height: 40px;
+            width: 38px;
+            position: absolute;
+            overflow: hidden;
+            top: 6px;
+        }
+        [dir="rtl"] .wormhole-border { left: 6px; }
+        [dir="ltr"] .wormhole-border { right: 6px; }
+
+        .wormhole-border::before {
+            content: "";
+            text-align: center;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(90deg);
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background-repeat: no-repeat;
+            background-position: 0 0;
+            filter: brightness(1.35);
+            background-image: conic-gradient(
+                rgba(0, 0, 0, 0),
+                #4d6dff,
+                rgba(0, 0, 0, 0) 50%,
+                rgba(0, 0, 0, 0) 50%,
+                #6e8cff,
+                rgba(0, 0, 0, 0) 100%
+            );
+            animation: rotate 4s linear infinite;
+        }
+
+        #main {
+            position: relative;
+            width: 100%;
+        }
+
+        #search-icon {
+            position: absolute;
+            top: 14px;
+        }
+        [dir="rtl"] #search-icon { right: 16px; }
+        [dir="ltr"] #search-icon { left: 16px; }
+
+        @keyframes rotate {
+            100% {
+                transform: translate(-50%, -50%) rotate(450deg);
+            }
+        }
+
+        /* Floating Language Menu Styles */
+        .button-menu {
+            cursor: pointer;
+            position: absolute;
+            z-index: 1;
+            background-color: #0b0f19;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            font-size: 18px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .checkbox {
+            width: 52px;
+            height: 52px;
+            opacity: 0;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .option-lang {
+            position: absolute;
+            background-color: #0b0f19;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            z-index: -1;
+            width: 80px;
+            height: 38px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+            white-space: nowrap;
+        }
+
+        .checkbox:hover ~ .button-menu,
+        .checkbox:checked ~ .button-menu {
+            background-color: #000000;
+            border-color: #3b82f6;
+            transform: scale(0.98);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+        }
+
+        .checkbox:not(:checked) ~ .button-menu::before,
+        .checkbox:checked ~ .button-menu::after {
+            content: "\f0ac";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+        .checkbox:not(:checked) ~ .button-menu::after {
+            content: "";
+        }
+
+        .checkbox:not(:checked) ~ .option-lang {
+            box-shadow: none;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .checkbox:checked ~ .option-lang {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .option-lang:hover,
+        .option-lang:active,
+        .option-lang:focus {
+            box-shadow: none;
+            transform: scale(1.05);
+            background-color: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        [dir="rtl"] .checkbox:checked ~ .option-ku {
+            transition-delay: 0.1s;
+            transform: translateY(-80px);
+        }
+        [dir="rtl"] .checkbox:checked ~ .option-ar {
+            transition-delay: 0.2s;
+            transform: translateY(-45px) translateX(80px);
+        }
+        [dir="rtl"] .checkbox:checked ~ .option-en {
+            transition-delay: 0.3s;
+            transform: translateX(95px);
+        }
+
+        [dir="ltr"] .checkbox:checked ~ .option-ku {
+            transition-delay: 0.1s;
+            transform: translateY(-80px);
+        }
+        [dir="ltr"] .checkbox:checked ~ .option-ar {
+            transition-delay: 0.2s;
+            transform: translateY(-45px) translateX(-80px);
+        }
+        [dir="ltr"] .checkbox:checked ~ .option-en {
+            transition-delay: 0.3s;
+            transform: translateX(-95px);
+        }
+
+        /* DYNAMIC VERTICAL EXPANDING MENU AT BOTTOM-RIGHT (Fully Mobile Responsive) */
+        .dynamic-vertical-menu {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            gap: 10px;
+        }
+        [dir="ltr"] .dynamic-vertical-menu {
+            right: auto;
+            left: 20px;
+        }
+
+        .main-globe-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background-color: #2e2e2e;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .main-globe-btn:hover {
+            transform: scale(1.05);
+            background-color: #1e293b;
+        }
+
+        .dynamic-vertical-menu.active .main-globe-btn {
+            background-color: #3b82f6;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.6);
+            transform: rotate(180deg);
+        }
+
+        .categories-vertical-container {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: flex-end;
+            gap: 8px;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            padding-right: 4px;
+        }
+        [dir="ltr"] .categories-vertical-container {
+            align-items: flex-start;
+            padding-right: 0;
+            padding-left: 4px;
+        }
+
+        .dynamic-vertical-menu.active .categories-vertical-container {
+            max-height: 380px;
+            opacity: 1;
+            overflow-y: auto;
+            padding-bottom: 6px;
+            pointer-events: auto;
+        }
+
+        .cat-item-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 7px 12px;
+            border-radius: 18px;
+            color: #f8fafc;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .cat-item-btn:hover {
+            background: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .cat-item-btn.active-cat {
+            border-color: #3b82f6;
+            background: #1d4ed8;
+            color: white;
+            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+
+        /* PRINT STYLES */
+        @page {
+            margin: 0;
+            size: auto;
+        }
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+            #printableInvoice, #printableInvoice * {
+                visibility: visible !important;
+            }
+            #printableInvoice {
+                display: block !important;
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                background: white !important;
+                color: black !important;
+                padding: 20px;
+                font-family: 'Vazirmatn', sans-serif;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="w-full min-h-screen p-3 sm:p-4 lg:p-6 flex flex-col justify-between relative">
+
+    <!-- FLOATING LANGUAGE MENU (Left Bottom) -->
+    <div id="langMenuContainer" class="fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50">
+        <div class="relative flex items-center justify-center">
+            <input class="checkbox" type="checkbox" />
+            <span class="button-menu"></span>
+            <button onclick="switchLanguage('ckb', 'rtl')" class="option-ku option-lang">کوردی</button>
+            <button onclick="switchLanguage('ar', 'rtl')" class="option-ar option-lang">عەرەبی</button>
+            <button onclick="switchLanguage('en', 'ltr')" class="option-en option-lang">English</button>
+        </div>
+    </div>
+
+    <!-- DYNAMIC VERTICAL CATEGORY MENU (Bottom-Right) -->
+    <div class="dynamic-vertical-menu" id="dynamicMenu">
+        <button class="main-globe-btn" onclick="toggleCategoryMenu()" title="کردنەوەی بەشەکان">
+            <i class="fa-solid fa-globe" id="globeIcon"></i>
+        </button>
+        
+        <div class="categories-vertical-container" id="verticalCategoriesContainer">
+            <!-- Dynamic Category Buttons populated via JS -->
+        </div>
+    </div>
+
+    <div class="w-full max-w-7xl mx-auto space-y-4 sm:space-y-6 flex-grow flex flex-col">
+        
+        <!-- Header -->
+        <header class="glass-panel rounded-2xl sm:rounded-3xl p-4 sm:p-6 flex flex-col lg:flex-row items-center justify-between gap-4 shadow-2xl">
+            <div class="flex items-center space-x-3 sm:space-x-4 space-x-reverse w-full lg:w-auto justify-start">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30 shrink-0">
+                    <i class="fa-solid fa-file-invoice-dollar text-xl sm:text-2xl text-white"></i>
+                </div>
+                <div>
+                    <h1 id="txtSysTitle" class="text-lg sm:text-2xl font-extrabold text-white tracking-wide">سیستەمی قەرز و دانەوە</h1>
+                    <p id="txtSysSubtitle" class="text-[11px] sm:text-xs text-blue-300">بەڕێوەبەری سەرەکی سیستم (+ بەشی قایمە و کاڵاکان)</p>
+                </div>
+            </div>
+
+            <!-- Cosmic Search Box -->
+            <div class="galaxy"></div>
+            <div id="search-container" class="w-full sm:w-auto">
+              <div class="nebula"></div>
+              <div class="starfield"></div>
+              <div class="stardust"></div>
+              <div class="cosmic-ring"></div>
+              <div id="main" class="w-full flex justify-center sm:block">
+                <input
+                  class="input"
+                  name="text"
+                  type="text"
+                  id="searchInput"
+                  oninput="handleSearch(this.value)"
+                  placeholder="گەڕان بەدوای کەسەکان..."
+                />
+                <div id="input-mask"></div>
+                <div id="cosmic-glow"></div>
+                <div class="wormhole-border"></div>
+                <div id="wormhole-icon">
+                  <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="#a9c7ff" fill="none" height="20" width="20" viewBox="0 0 24 24">
+                    <circle r="10" cy="12" cx="12"></circle>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                    <path d="M2 12h20"></path>
+                  </svg>
+                </div>
+                <div id="search-icon">
+                  <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="url(#cosmic-search)" fill="none" height="20" width="20" viewBox="0 0 24 24">
+                    <circle r="8" cy="11" cx="11"></circle>
+                    <line y2="16.65" x2="16.65" y1="21" x1="21"></line>
+                    <defs>
+                      <linearGradient gradientTransform="rotate(45)" id="cosmic-search">
+                        <stop stop-color="#a9c7ff" offset="0%"></stop>
+                        <stop stop-color="#6e8cff" offset="100%"></stop>
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 w-full lg:w-auto">
+                <button onclick="openSavedInvoicesModal()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold px-3.5 sm:px-4 py-2.5 sm:py-3 rounded-xl sm:rounded-2xl text-xs transition shadow-lg flex items-center space-x-2 space-x-reverse cursor-pointer">
+                    <i class="fa-solid fa-receipt"></i>
+                    <span id="txtViewSavedInvoices">وەسڵە سەیفکراوەکان</span>
+                </button>
+
+                <button class="custom-sparkle-btn" onclick="openComprehensiveReportModal()">
+                    <svg class="sparkle" viewBox="0 0 24 24" width="18" height="18">
+                        <path d="M10,21.236V15.5C10,14.119,8.881,13,7.5,13H1.764C1.298,13,1,12.553,1,12.087V11.913C1,11.447,1.298,11,1.764,11H7.5C8.881,11,10,9.881,10,8.5V2.764C10,2.298,10.447,2,10.913,2H11.087C11.553,2,11.851,2.298,11.851,2.764V8.5C11.851,9.881,12.97,11,14.351,11H20.087C20.553,11,20.851,11.447,20.851,11.913V12.087C20.851,12.553,20.553,13,20.087,13H14.351C12.97,13,11.851,14.119,11.851,15.5V21.236C11.851,21.702,11.553,22,11.087,22H10.913C10.447,22,10,21.702,10,21.236Z"/>
+                    </svg>
+                    <span id="txtViewReports" class="btn-text">بینینی راپۆرتەکان</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Stats Overview Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6">
+            <div onclick="openReportModal('total')" class="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-6 border-s-8 border-s-blue-500 shadow-xl relative overflow-hidden cursor-pointer hover:bg-slate-800/60 transition transform hover:-translate-y-1">
+                <div class="absolute end-4 top-4 text-blue-500/20 text-4xl sm:text-5xl"><i class="fa-solid fa-wallet"></i></div>
+                <p id="txtCardTotal" class="text-xs text-slate-300 font-semibold">کۆی گشتی قەرزەکان (کلیک بکە)</p>
+                <h3 id="statTotalDebt" class="text-xl sm:text-2xl font-extrabold text-blue-400 mt-2">0 د.ع.</h3>
+                <p id="txtCardTotalSub" class="text-[11px] text-slate-400 mt-1">سەرجەم قەرزی تۆمارکراو</p>
+            </div>
+
+            <div onclick="openReportModal('paid')" class="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-6 border-s-8 border-s-emerald-500 shadow-xl relative overflow-hidden cursor-pointer hover:bg-slate-800/60 transition transform hover:-translate-y-1">
+                <div class="absolute end-4 top-4 text-emerald-500/20 text-4xl sm:text-5xl"><i class="fa-solid fa-circle-check"></i></div>
+                <p id="txtCardPaid" class="text-xs text-slate-300 font-semibold">کۆی گشتی دانەوە (کلیک بکە)</p>
+                <h3 id="statTotalPaid" class="text-xl sm:text-2xl font-extrabold text-emerald-400 mt-2">0 د.ع.</h3>
+                <p id="txtCardPaidSub" class="text-[11px] text-slate-400 mt-1">ئەو پارەیەی دراوەتەوە</p>
+            </div>
+
+            <div onclick="openReportModal('remaining')" class="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-6 border-s-8 border-s-rose-500 shadow-xl relative overflow-hidden cursor-pointer hover:bg-slate-800/60 transition transform hover:-translate-y-1 sm:col-span-2 md:col-span-1">
+                <div class="absolute end-4 top-4 text-rose-500/20 text-4xl sm:text-5xl"><i class="fa-solid fa-scale-balanced"></i></div>
+                <p id="txtCardRemaining" class="text-xs text-slate-300 font-semibold">چەند قەرزی لاماوە؟ (کلیک بکە)</p>
+                <h3 id="statRemaining" class="text-xl sm:text-2xl font-extrabold text-rose-400 mt-2">0 د.ع.</h3>
+                <p id="txtCardRemainingSub" class="text-[11px] text-slate-400 mt-1">بڕی قەرزی نەدراوەتەوە</p>
+            </div>
+        </div>
+
+        <!-- SEARCH RESULTS LIVE CONTAINER -->
+        <div id="liveSearchResultsContainer" class="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-6 shadow-2xl border border-blue-500/40 space-y-4 hidden">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-3">
+                <h3 class="text-sm font-bold text-blue-300 flex items-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass-dollar text-blue-400"></i> ئەنجامی گەڕان بۆ قەرزدارەکان
+                </h3>
+                <span id="searchResultCount" class="text-xs bg-blue-500/20 text-blue-300 px-3 py-1 rounded-full font-semibold">0 ئەنجام</span>
+            </div>
+            <div id="liveSearchResultsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-72 overflow-y-auto pr-1">
+                <!-- Dynamic search results -->
+            </div>
+        </div>
+
+        <!-- POS & PRODUCT MANAGEMENT -->
+        <div class="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 shadow-2xl border border-amber-500/30 space-y-6">
+            <div class="flex flex-col md:flex-row items-center justify-between border-b border-slate-700/60 pb-4 gap-4">
+                <div class="flex items-center space-x-3 space-x-reverse w-full md:w-auto">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-500/20 flex items-center justify-center text-amber-400 text-xl shadow-inner shrink-0">
+                        <i class="fa-solid fa-cash-register"></i>
+                    </div>
+                    <div>
+                        <h2 id="txtPosTitle" class="text-lg sm:text-xl font-extrabold text-white">بەشی قایمە (POS) و فرۆشتنی خێرا</h2>
+                        <p id="txtPosSubtitle" class="text-[11px] sm:text-xs text-amber-300">کاڵاکان هەڵبژێرە، بڕ و نرخەکەی ببینە و قایمەکەی چاپ بکە</p>
+                    </div>
+                </div>
+                <button onclick="openAddProductModal()" class="w-full md:w-auto bg-amber-600 hover:bg-amber-500 text-white font-bold px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm transition shadow-lg flex items-center justify-center space-x-2 space-x-reverse cursor-pointer">
+                    <i class="fa-solid fa-plus"></i>
+                    <span id="txtAddProductBtn">زیادکردنی بەرهەمی نوێ بۆ قایمە</span>
+                </button>
+            </div>
+
+            <!-- Grid for Products and Cart -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Products Catalog (2 Columns) -->
+                <div class="lg:col-span-2 space-y-4">
+                    <h3 id="txtProductsListTitle" class="text-xs sm:text-sm font-bold text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-boxes-stacked text-amber-400"></i> لیستی کاڵا و شتومەکەکان (کلیک لەسەر + بکە بۆ زیادکردن بۆ سەبەتە)
+                    </h3>
+                    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4 max-h-[450px] overflow-y-auto p-1 sm:p-2">
+                        <!-- Dynamic Products -->
+                    </div>
+                </div>
+
+                <!-- Shopping Cart & Checkout (1 Column) -->
+                <div class="bg-slate-900/80 rounded-2xl p-4 sm:p-5 border border-slate-700 flex flex-col justify-between space-y-4 shadow-xl">
+                    <div>
+                        <h3 id="txtCartTitle" class="text-xs sm:text-sm font-bold text-white flex items-center gap-2 border-b border-slate-700 pb-3">
+                            <i class="fa-solid fa-cart-shopping text-emerald-400"></i> سەبەتەی کڕین (قایمە)
+                        </h3>
+                        <div class="mt-3 space-y-2">
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-300 mb-1">ناوی کڕیار / مشتری بۆ ئەم وەسڵە</label>
+                                <input type="text" id="cartClientName" placeholder="مشتری گشتی..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-[11px] font-semibold text-slate-300 mb-1">ژمارەی تەلەفۆنی کڕیار</label>
+                                <input type="text" id="cartClientPhone" placeholder="07XXXXXXXXX..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-500">
+                            </div>
+                        </div>
+                        <div id="cartItemsContainer" class="space-y-3 mt-3 max-h-48 overflow-y-auto pr-1">
+                            <p id="txtEmptyCart" class="text-xs text-slate-400 text-center py-4">سەبەتە بەتاڵە...</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 border-t border-slate-700 pt-4">
+                        <div class="flex justify-between items-center text-sm sm:text-base font-extrabold text-white">
+                            <span id="txtGrandTotalLabel" class="text-slate-200">کۆی گشتی پارە:</span>
+                            <span id="cartTotalPrice" class="text-amber-400 text-base sm:text-lg">0 د.ع.</span>
+                        </div>
+
+                        <button onclick="printCartInvoice()" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-3 sm:py-3.5 rounded-xl shadow-lg transition text-xs sm:text-sm flex items-center justify-center space-x-2 space-x-reverse cursor-pointer">
+                            <i class="fa-solid fa-print"></i>
+                            <span id="txtPrintBtn">چاپکردنی قایمە (Print)</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MANAGER DASHBOARD CONTAINER -->
+        <div class="glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-6 lg:p-8 shadow-2xl border border-indigo-500/30 space-y-6 sm:space-y-8">
+            <div class="flex items-center space-x-3 space-x-reverse border-b border-slate-700/60 pb-4">
+                <div class="w-12 h-12 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 text-xl shadow-inner shrink-0">
+                    <i class="fa-solid fa-user-shield"></i>
+                </div>
+                <div>
+                    <h2 id="txtManagerTitle" class="text-lg sm:text-xl font-extrabold text-white">بەشی بەڕێوەبەر (Dashboard)</h2>
+                    <p id="txtManagerSubtitle" class="text-[11px] sm:text-xs text-indigo-300">بەڕێوەبەری تەواوی کردارەکانی قەرزکردن، دانەوە و بەڕێوەبردنی بەرهەمەکان</p>
+                </div>
+            </div>
+
+            <!-- Forms Grid + Product Deletion Management -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Section 1: قەرزکردن -->
+                <div class="bg-slate-900/40 rounded-2xl p-5 sm:p-6 shadow-xl border-t-4 border-t-blue-500">
+                    <div class="flex items-center space-x-3 space-x-reverse mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400 text-lg">
+                            <i class="fa-solid fa-user-plus"></i>
+                        </div>
+                        <h3 id="txtDebtFormTitle" class="text-sm sm:text-base font-bold text-white">1. بەشی قەرزکردن (تۆمارکردن)</h3>
+                    </div>
+
+                    <form id="debtForm" onsubmit="handleAddDebt(event)" class="space-y-4">
+                        <div>
+                            <label id="txtClientNameLabel" class="block text-xs font-semibold text-slate-300 mb-1">ناوی کەس / مشتری</label>
+                            <input type="text" id="clientName" required placeholder="ناوی تەواو..." class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-blue-500 text-white">
+                        </div>
+                        <div>
+                            <label id="txtDebtAmountLabel" class="block text-xs font-semibold text-slate-300 mb-1">بڕی قەرز (د.ع.)</label>
+                            <input type="number" id="debtAmount" required placeholder="بڕی پارە..." class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-blue-500 text-white">
+                        </div>
+                        <div>
+                            <label id="txtDebtNoteLabel" class="block text-xs font-semibold text-slate-300 mb-1">تێبینی / مۆبایل</label>
+                            <input type="text" id="debtNote" placeholder="ژمارەی مۆبایل یان تێبینی..." class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-blue-500 text-white">
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-bold py-3 rounded-xl shadow-lg transition flex items-center justify-center space-x-2 space-x-reverse text-xs sm:text-sm cursor-pointer">
+                            <i class="fa-solid fa-plus-circle"></i>
+                            <span id="txtSaveDebtBtn">تۆمارکردنی قەرز</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Section 2: دانەوە -->
+                <div class="bg-slate-900/40 rounded-2xl p-5 sm:p-6 shadow-xl border-t-4 border-t-emerald-500">
+                    <div class="flex items-center space-x-3 space-x-reverse mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400 text-lg">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                        </div>
+                        <h3 id="txtPaymentFormTitle" class="text-sm sm:text-base font-bold text-white">2. بەشی دانەوەی قەرز</h3>
+                    </div>
+
+                    <form id="paymentForm" onsubmit="handlePayment(event)" class="space-y-4">
+                        <div>
+                            <label id="txtSelectClientLabel" class="block text-xs font-semibold text-slate-300 mb-1">هەڵبژاردنی قەرزکار</label>
+                            <select id="paymentClientSelect" required class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-emerald-500 text-white">
+                                <option value="" id="txtSelectClientOpt">-- کەسێک هەڵبژێرە --</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label id="txtPaymentAmountLabel" class="block text-xs font-semibold text-slate-300 mb-1">بڕی پارەی دراوەتەوە (د.ع.)</label>
+                            <input type="number" id="paymentAmount" required placeholder="بڕی دانەوە..." class="w-full bg-slate-900/80 border border-slate-700 rounded-xl px-4 py-3 text-xs sm:text-sm focus:outline-none focus:border-emerald-500 text-white">
+                        </div>
+                        <button type="submit" class="w-full bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-bold py-3 rounded-xl shadow-lg transition flex items-center justify-center space-x-2 space-x-reverse text-xs sm:text-sm mt-10 cursor-pointer">
+                            <i class="fa-solid fa-check-to-slot"></i>
+                            <span id="txtSavePaymentBtn">تۆمارکردنی دانەوە</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Section 3: بەڕێوەبردن و سڕینەوەی بەرهەمەکان -->
+                <div class="bg-slate-900/40 rounded-2xl p-5 sm:p-6 shadow-xl border-t-4 border-t-rose-500 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center space-x-3 space-x-reverse mb-4">
+                            <div class="w-10 h-10 rounded-xl bg-rose-500/20 flex items-center justify-center text-rose-400 text-lg">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </div>
+                            <h3 id="txtManageProductsTitle" class="text-sm sm:text-base font-bold text-white">3. سڕینەوەی بەرهەمەکان</h3>
+                        </div>
+                        <p id="txtManageProductsSub" class="text-xs text-slate-400 mb-4">دەتوانیت هەر بەرهەمێکی زیادکراو بیسڕیتەوە:</p>
+                        
+                        <div id="manageProductsList" class="space-y-2 max-h-56 overflow-y-auto pr-1">
+                            <!-- Dynamic Products List for Deletion -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PROFESSIONAL PRINTABLE INVOICE TEMPLATE -->
+    <div id="printableInvoice" class="hidden">
+        <div style="text-align: center; margin-bottom: 15px;">
+            <h1 style="font-size: 24px; font-weight: bold; margin: 0; color: #000; letter-spacing: 1px;">AQUA CENTER</h1>
+            <p style="font-size: 11px; color: #555; margin: 3px 0;">لبيع المواد المنزلية والمنظفات - فرۆشتنی پێداویستییەکانی ماڵەوە</p>
+            <h3 id="printInvTitle" style="font-size: 16px; margin-top: 8px; border-bottom: 2px solid #333; padding-bottom: 4px; display: inline-block;">Sales Invoice (قایمەی فرۆشتن)</h3>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 15px; line-height: 1.6; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+            <div>
+                <p><strong>Date (ڕێکەوت):</strong> <span id="printDate"></span></p>
+                <p><strong>Invoice # (ژ. قایمە):</strong> <span id="printInvoiceNum">29732</span></p>
+                <p><strong>Bill To (بۆ):</strong> <span id="printClientName">مشتری گشتی</span></p>
+                <p><strong>Phone (تەلەفۆن):</strong> <span id="printClientPhone">---</span></p>
+            </div>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; text-align: right; font-size: 12px; margin-bottom: 20px;">
+            <thead>
+                <tr style="background-color: #f1f5f9; border-bottom: 2px solid #333;">
+                    <th style="padding: 6px; border: 1px solid #cbd5e1; text-align: center; width: 35px;">#</th>
+                    <th id="printThItem" style="padding: 6px; border: 1px solid #cbd5e1;">Item Name (ناوی کاڵا)</th>
+                    <th id="printThUnit" style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">Unit (یەکە)</th>
+                    <th id="printThQty" style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">Quantity (بڕ)</th>
+                    <th id="printThPrice" style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">Unit Price (نرخی تاک)</th>
+                    <th id="printThTotal" style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">Total (کۆ)</th>
+                </tr>
+            </thead>
+            <tbody id="printTableBody"></tbody>
+        </table>
+
+        <div style="display: flex; justify-content: flex-end; font-size: 12px; margin-top: 10px;">
+            <table style="width: 280px; border-collapse: collapse;">
+                <tr>
+                    <td style="padding: 4px; border-bottom: 1px solid #ddd;"><strong>Subtotal (کۆی گشتی):</strong></td>
+                    <td id="printSubtotal" style="padding: 4px; border-bottom: 1px solid #ddd; text-align: left;">0 د.ع.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 4px; border-bottom: 1px solid #ddd;"><strong>Grand Total:</strong></td>
+                    <td id="printGrandTotal" style="padding: 4px; border-bottom: 1px solid #ddd; text-align: left; font-weight: bold;">0 د.ع.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 4px; border-bottom: 1px solid #ddd;"><strong>Recieved Amount:</strong></td>
+                    <td id="printReceived" style="padding: 4px; border-bottom: 1px solid #ddd; text-align: left;">0 د.ع.</td>
+                </tr>
+                <tr>
+                    <td style="padding: 4px; border-bottom: 1px solid #ddd;"><strong>Amount Due:</strong></td>
+                    <td id="printDue" style="padding: 4px; border-bottom: 1px solid #ddd; text-align: left;">0 د.ع.</td>
+                </tr>
+            </table>
+        </div>
+
+        <p id="printFooter" style="text-align: center; margin-top: 35px; font-size: 11px; border-top: 1px dashed #ccc; padding-top: 8px;">سوپاس بۆ کڕینەکەت! | Thank you for your business!</p>
+    </div>
+
+    <!-- MODAL FOR ADDING NEW PRODUCT (WITH DYNAMIC CATEGORY CREATION) -->
+    <div id="addProductModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="glass-panel bg-slate-900 border border-slate-700 w-full max-w-md rounded-3xl p-6 shadow-2xl space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-4">
+                <h3 id="txtModalAddProdTitle" class="text-lg font-bold text-white">زیادکردنی بەرهەمی نوێ بۆ قایمە</h3>
+                <button onclick="closeAddProductModal()" class="text-slate-400 hover:text-white text-xl cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="addProductForm" onsubmit="handleAddNewProduct(event)" class="space-y-4">
+                <div>
+                    <label id="txtModalProdNameLabel" class="block text-xs font-semibold text-slate-300 mb-1">ناوی بەرهەم / شتومەک</label>
+                    <input type="text" id="newProdName" required placeholder="بۆ نموونە: برنج، زەیتی..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label id="txtModalProdPriceLabel" class="block text-xs font-semibold text-slate-300 mb-1">نرخی بەرهەم (د.ع.)</label>
+                    <input type="number" id="newProdPrice" required placeholder="نرخ..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-300 mb-1">بەشی بەرهەم (کاتیگۆری)</label>
+                    <input type="text" id="newProdCategory" placeholder="بۆ نموونە: مەتبەخ، کارەبایی، پاککەرەوە یان ناوی بەشێکی نوێ..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-amber-500">
+                    <p class="text-[10px] text-slate-400 mt-1">ئەگەر بەشەکە پێشتر نەبووبێت، خۆکارانە دوگمەیەکی نوێی بۆ دروست دەبێت لەسەر دوگمەی زەوییەکە.</p>
+                </div>
+                <button type="submit" id="txtModalAddBtn" class="w-full bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 rounded-xl transition text-sm cursor-pointer">زیادکردنی بەرهەم</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL FOR SAVED INVOICES WITH ENHANCED SEARCH & DELETE -->
+    <div id="savedInvoicesModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="glass-panel bg-slate-900 border border-slate-700 w-full max-w-3xl rounded-3xl p-6 lg:p-8 shadow-2xl space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-4">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+                    <h3 id="txtSavedInvoicesTitle" class="text-xl font-bold text-white">وەسڵە سەیفکراوەکان (تۆمارکراوی وەسڵەکان)</h3>
+                </div>
+                <button onclick="closeSavedInvoicesModal()" class="text-slate-400 hover:text-white text-xl cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <!-- Search bar for Saved Invoices -->
+            <div>
+                <input type="text" id="savedInvoiceSearch" oninput="renderSavedInvoicesList(this.value)" placeholder="گەڕان بەدوای ناوی کەسەکان، ژمارەی تەلەفۆن یان ژمارەی وەسڵ..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-indigo-500">
+            </div>
+
+            <div id="savedInvoicesList" class="space-y-4 max-h-[50vh] overflow-y-auto pr-2">
+                <!-- Dynamic Saved Invoices -->
+            </div>
+
+            <button onclick="closeSavedInvoicesModal()" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl transition text-sm cursor-pointer">داخستن</button>
+        </div>
+    </div>
+
+    <!-- MODAL FOR CLICKABLE STATS -->
+    <div id="reportModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="glass-panel bg-slate-900 border border-slate-700 w-full max-w-lg rounded-3xl p-6 shadow-2xl space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-4">
+                <h3 id="modalTitle" class="text-lg font-bold text-white">وردەکاری</h3>
+                <button onclick="closeReportModal()" class="text-slate-400 hover:text-white text-xl cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="modalContent" class="space-y-3 max-h-80 overflow-y-auto"></div>
+            <button onclick="closeReportModal()" id="txtCloseBtn1" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-2.5 rounded-xl transition text-sm cursor-pointer">داخستن</button>
+        </div>
+    </div>
+
+    <!-- COMPREHENSIVE MODAL FOR SPARKLE BUTTON -->
+    <div id="comprehensiveModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+        <div class="glass-panel bg-slate-900 border border-slate-700 w-full max-w-4xl rounded-3xl p-6 lg:p-8 shadow-2xl space-y-6">
+            <div class="flex items-center justify-between border-b border-slate-700 pb-4">
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <h3 id="txtCompModalTitle" class="text-xl font-bold text-white">راپۆرتی گشتی و تێرەسەلی سیستم</h3>
+                </div>
+                <button onclick="closeComprehensiveModal()" class="text-slate-400 hover:text-white text-xl cursor-pointer"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="overflow-x-auto max-h-[60vh]">
+                <table class="w-full text-right border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-700 text-xs text-slate-400">
+                            <th id="thCompName" class="p-3 font-bold text-white">ناوی کەسەکان</th>
+                            <th id="thCompTotal" class="p-3 text-blue-400">کۆی گشتی قەرزەکان</th>
+                            <th id="thCompPaid" class="p-3 text-emerald-400">کۆی گشتی دانەوە</th>
+                            <th id="thCompRemaining" class="p-3 text-rose-400">کۆی گشتی قەرزی ماوە</th>
+                        </tr>
+                    </thead>
+                    <tbody id="comprehensiveTableBody" class="text-sm divide-y divide-slate-800"></tbody>
+                </table>
+            </div>
+
+            <button onclick="closeComprehensiveModal()" id="txtCloseBtn2" class="w-full bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl transition text-sm cursor-pointer">داخستن</button>
+        </div>
+    </div>
+
+    <!-- JavaScript & Translations -->
+    <script>
+        const translations = {
+            ckb: {
+                pageTitle: "سیستەمی قەرز و دانەوە - بەشی بەڕێوەبەر",
+                sysTitle: "سیستەمی قەرز و دانەوە",
+                sysSubtitle: "بەڕێوەبەری سەرەکی سیستم (+ بەشی قایمە و کاڵاکان)",
+                searchPlaceholder: "گەڕان بەدوای کەسەکان...",
+                viewReports: "بینینی راپۆرتەکان",
+                viewSavedInvoices: "وەسڵە سەیفکراوەکان",
+                cardTotal: "کۆی گشتی قەرزەکان (کلیک بکە)",
+                cardTotalSub: "سەرجەم قەرزی تۆمارکراو",
+                cardPaid: "کۆی گشتی دانەوە (کلیک بکە)",
+                cardPaidSub: "ئەو پارەیەی دراوەتەوە",
+                cardRemaining: "چەند قەرزی لاماوە؟ (کلیک بکە)",
+                cardRemainingSub: "بڕی قەرزی نەدراوەتەوە",
+                posTitle: "بەشی قایمە (POS) و فرۆشتنی خێرا",
+                posSubtitle: "کاڵاکان هەڵبژێرە، بڕ و نرخەکەی ببینە و قایمەکەی چاپ بکە",
+                addProductBtn: "زیادکردنی بەرهەمی نوێ بۆ قایمە",
+                productsListTitle: "لیستی کاڵا و شتومەکەکان (کلیک لەسەر + بکە بۆ زیادکردن بۆ سەبەتە)",
+                cartTitle: "سەبەتەی کڕین (قایمە)",
+                emptyCart: "سەبەتە بەتاڵە...",
+                grandTotalLabel: "کۆی گشتی پارە:",
+                printBtn: "چاپکردنی قایمە (Print)",
+                managerTitle: "بەشی بەڕێوەبەر (Dashboard)",
+                managerSubtitle: "بەڕێوەبەری تەواوی کردارەکانی قەرزکردن، دانەوە و بەڕێوەبردنی بەرهەمەکان",
+                debtFormTitle: "1. بەشی قەرزکردن (تۆمارکردن)",
+                clientNameLabel: "ناوی کەس / مشتری",
+                debtAmountLabel: "بڕی قەرز (د.ع.)",
+                debtNoteLabel: "تێبینی / مۆبایل",
+                saveDebtBtn: "تۆمارکردنی قەرز",
+                paymentFormTitle: "2. بەشی دانەوەی قەرز",
+                selectClientLabel: "هەڵبژاردنی قەرزکار",
+                selectClientOpt: "-- کەسێک هەڵبژێرە --",
+                paymentAmountLabel: "بڕی پارەی دراوەتەوە (د.ع.)",
+                savePaymentBtn: "تۆمارکردنی دانەوە",
+                manageProductsTitle: "3. سڕینەوەی بەرهەمەکان",
+                manageProductsSub: "دەتوانیت هەر بەرهەمێکی زیادکراو بیسڕیتەوە:",
+                deleteBtnText: "سڕینەوە",
+                modalAddProdTitle: "زیادکردنی بەرهەمی نوێ بۆ قایمە",
+                modalProdNameLabel: "ناوی بەرهەم / شتومەک",
+                modalProdPriceLabel: "نرخی بەرهەم (د.ع.)",
+                modalAddBtn: "زیادکردنی بەرهەم",
+                closeBtn: "داخستن",
+                compModalTitle: "راپۆرتی گشتی و تێرەسەلی سیستم",
+                thCompName: "ناوی کەسەکان",
+                thCompTotal: "کۆی گشتی قەرزەکان",
+                thCompPaid: "کۆی گشتی دانەوە",
+                thCompRemaining: "کۆی گشتی قەرزی ماوە",
+                printInvTitle: "قایمەی فرۆشتن (Sales Invoice)",
+                printThItem: "ناوی کاڵا / Item Name",
+                printThUnit: "یەکە / Unit",
+                printThQty: "بڕ / Qty",
+                printThPrice: "نرخی تاک / Unit Price",
+                printThTotal: "کۆ / Total",
+                printFooter: "سوپاس بۆ کڕینەکەت! | Thank you for your business!"
+            },
+            ar: {
+                pageTitle: "نظام الديون والمدفوعات - لوحة التحكم",
+                sysTitle: "نظام الديون والمدفوعات",
+                sysSubtitle: "المدير الرئيسي للنظام (+ قسم القائمة والمنتجات)",
+                searchPlaceholder: "البحث عن الأشخاص...",
+                viewReports: "عرض التقارير",
+                viewSavedInvoices: "الفواتير المحفوظة",
+                cardTotal: "إجمالي الديون (انقر للاستعراض)",
+                cardTotalSub: "جميع الديون المسجلة",
+                cardPaid: "إجمالي المدفوعات (انقر للاستعراض)",
+                cardPaidSub: "المبلغ المدفوع فعلياً",
+                cardRemaining: "الديون المتبقية (انقر للاستعراض)",
+                cardRemainingSub: "المبلغ غير المدفوع",
+                posTitle: "قسم المبيعات السريعة (POS)",
+                posSubtitle: "اختر المنتجات، اعرض السعر واطبع الفاتورة",
+                addProductBtn: "إضافة منتج جديد للقائمة",
+                productsListTitle: "قائمة المنتجات (انقر على + للإضافة إلى السلة)",
+                cartTitle: "سلة التسوق (الفاتورة)",
+                emptyCart: "السلة فارغة...",
+                grandTotalLabel: "المبلغ الإجمالي:",
+                printBtn: "طباعة الفاتورة (Print)",
+                managerTitle: "لوحة التحكم (Dashboard)",
+                managerSubtitle: "إدارة عمليات تسجيل الديون، التسديد وإدارة المنتجات",
+                debtFormTitle: "1. قسم تسجيل الديون",
+                clientNameLabel: "اسم العميل",
+                debtAmountLabel: "مبلغ الدين (د.ع.)",
+                debtNoteLabel: "ملاحظات / هاتف",
+                saveDebtBtn: "تسجيل الدين",
+                paymentFormTitle: "2. قسم تسديد الديون",
+                selectClientLabel: "اختر المدين",
+                selectClientOpt: "-- اختر عميلاً --",
+                paymentAmountLabel: "المبلغ المدفوع (د.ع.)",
+                savePaymentBtn: "تسجيل التسديد",
+                manageProductsTitle: "3. حذف المنتجات",
+                manageProductsSub: "يمكنك حذف أي منتج تمت إضافته:",
+                deleteBtnText: "حذف",
+                modalAddProdTitle: "إضافة منتج جديد للقائمة",
+                modalProdNameLabel: "اسم المنتج / السلعة",
+                modalProdPriceLabel: "سعر المنتج (د.ع.)",
+                modalAddBtn: "إضافة المنتج",
+                closeBtn: "إغلاق",
+                compModalTitle: "التقرير الشامل للنظام",
+                thCompName: "اسم العميل",
+                thCompTotal: "إجمالي الديون",
+                thCompPaid: "إجمالي المدفوعات",
+                thCompRemaining: "الديون المتبقية",
+                printInvTitle: "فاتورة المبيعات (Sales Invoice)",
+                printThItem: "Item Name (ناوی کاڵا)",
+                printThUnit: "Unit (یەکە)",
+                printThQty: "Quantity (بڕ)",
+                printThPrice: "Unit Price (نرخی تاک)",
+                printThTotal: "Total (کۆ)",
+                printFooter: "سوپاس بۆ کڕینەکەت! | Thank you for your business!"
+            },
+            en: {
+                pageTitle: "Debt & Payment System - Manager Dashboard",
+                sysTitle: "Debt & Payment System",
+                sysSubtitle: "Main System Manager (+ POS & Products)",
+                searchPlaceholder: "Search clients...",
+                viewReports: "View Reports",
+                viewSavedInvoices: "Saved Invoices",
+                cardTotal: "Total Debts (Click to view)",
+                cardTotalSub: "All recorded debts",
+                cardPaid: "Total Paid (Click to view)",
+                cardPaidSub: "Amount returned",
+                cardRemaining: "Remaining Debt (Click to view)",
+                cardRemainingSub: "Unpaid balance",
+                posTitle: "POS & Quick Sales",
+                posSubtitle: "Select products, view pricing and print invoice",
+                addProductBtn: "Add New Product",
+                productsListTitle: "Products Catalog (Click + to add to cart)",
+                cartTitle: "Shopping Cart (Invoice)",
+                emptyCart: "Cart is empty...",
+                grandTotalLabel: "Grand Total:",
+                printBtn: "Print Invoice",
+                managerTitle: "Manager Dashboard",
+                managerSubtitle: "Manage all debt records, payments and product inventory",
+                debtFormTitle: "1. Record New Debt",
+                clientNameLabel: "Client Name",
+                debtAmountLabel: "Debt Amount (IQD)",
+                debtNoteLabel: "Note / Phone",
+                saveDebtBtn: "Save Debt",
+                paymentFormTitle: "2. Record Debt Payment",
+                selectClientLabel: "Select Client",
+                selectClientOpt: "-- Select a Client --",
+                paymentAmountLabel: "Paid Amount (IQD)",
+                savePaymentBtn: "Save Payment",
+                manageProductsTitle: "3. Delete Products",
+                manageProductsSub: "You can remove any added product below:",
+                deleteBtnText: "Delete",
+                modalAddProdTitle: "Add New Product to POS",
+                modalProdNameLabel: "Product Name",
+                modalProdPriceLabel: "Product Price (IQD)",
+                modalAddBtn: "Add Product",
+                closeBtn: "Close",
+                compModalTitle: "Comprehensive System Report",
+                thCompName: "Client Name",
+                thCompTotal: "Total Debt",
+                thCompPaid: "Total Paid",
+                thCompRemaining: "Remaining Debt",
+                printInvTitle: "Sales Invoice (قایمەی فرۆشتن)",
+                printThItem: "Item Name (ناوی کاڵا)",
+                printThUnit: "Unit (یەکە)",
+                printThQty: "Quantity (بڕ)",
+                printThPrice: "Unit Price (نرخی تاک)",
+                printThTotal: "Total (کۆ)",
+                printFooter: "سوپاس بۆ کڕینەکەت! | Thank you for your business!"
+            }
+        };
+
+        let defaultInitialData = [
+            { id: 1, name: 'ئارام ئەحمەد', totalDebt: 150000, paidAmount: 50000, note: 'مۆبایل' },
+            { id: 2, name: 'ژیلەمۆ عومەر', totalDebt: 300000, paidAmount: 100000, note: 'کاش' },
+            { id: 3, name: 'هاوکار حەسەن', totalDebt: 75000, paidAmount: 25000, note: 'تێبینی' },
+            { id: 4, name: 'ڕێبین قادر', totalDebt: 500000, paidAmount: 200000, note: 'قەرزی پێشوو' }
+        ];
+
+        let defaultCategories = [
+            { id: 'all', name: 'هەموو بەرهەمەکان', icon: 'fa-box-open' },
+            { id: 'kitchen', name: 'مەتبەخ و چێشتخانە', icon: 'fa-utensils' },
+            { id: 'cleaning', name: 'پاککەرەوە و خاوێنکەرەوە', icon: 'fa-pump-soap' },
+            { id: 'electrical', name: 'ئامێرە کارەباییەکان', icon: 'fa-bolt' },
+            { id: 'glassware', name: 'شووشەوات و گڵاس', icon: 'fa-wine-glass' },
+            { id: 'natural', name: 'بەرهەمە سروشتییەکان (نوێبوونەوە)', icon: 'fa-leaf' },
+            { id: 'plastic', name: 'پلاستیک و قاپی', icon: 'fa-box' },
+            { id: 'other', name: 'کەرەستەی دیکە', icon: 'fa-ellipsis' }
+        ];
+
+        let defaultProducts = [
+            { id: 101, name: 'شەکری سپی (1 کیلۆ)', price: 1500, category: 'kitchen' },
+            { id: 102, name: 'برنجی کوردی (1 کیلۆ)', price: 3000, category: 'kitchen' },
+            { id: 103, name: 'زەیتی خواردن (1 لتر)', price: 2500, category: 'kitchen' },
+            { id: 104, name: 'چاى مەحموود (پاکەت)', price: 4000, category: 'kitchen' },
+            { id: 105, name: 'ئاردی سپی (1 کیلۆ)', price: 1200, category: 'kitchen' },
+            { id: 106, name: 'زەیتی زەیتونی سروشتی (500 مل)', price: 8000, category: 'natural' },
+            { id: 107, name: 'ڕاشی پاک و خاوێن (1 کیلۆ)', price: 6000, category: 'natural' },
+            { id: 108, name: 'ئاوپەکی جاترە (شوشە)', price: 3500, category: 'natural' },
+            { id: 109, name: 'زەیتی جۆجۆبا (تایبەت)', price: 12000, category: 'natural' },
+            { id: 110, name: 'شامپۆی گیایی سروشتی', price: 7500, category: 'cleaning' },
+            { id: 111, name: 'کەوچک', price: 500, category: 'kitchen' },
+            { id: 112, name: 'چەقۆی چێشتخانە', price: 1500, category: 'kitchen' },
+            { id: 113, name: 'عەسارەی کارەبایی', price: 45000, category: 'electrical' },
+            { id: 114, name: 'گڵاسی شووشە', price: 1000, category: 'glassware' },
+            { id: 115, name: 'گڵاسی پلاستیک (پاکەت)', price: 500, category: 'plastic' },
+            { id: 116, name: 'کەوچکی نەخشدار', price: 750, category: 'kitchen' },
+            { id: 117, name: 'مەنجەڵی ئەلەمنیۆم', price: 25000, category: 'kitchen' },
+            { id: 118, name: 'مەنجەڵی بوخار', price: 45000, category: 'electrical' },
+            { id: 119, name: 'تاوەی تیدفال', price: 12000, category: 'kitchen' },
+            { id: 120, name: 'خاوێنکەرەوەی دەفر (فری)', price: 2000, category: 'cleaning' }
+        ];
+
+        let categoriesList = JSON.parse(localStorage.getItem('app_categories_list')) || defaultCategories;
+        let clientsData = JSON.parse(localStorage.getItem('app_simple_debts'));
+        if (!clientsData || clientsData.length === 0) {
+            clientsData = defaultInitialData;
+            localStorage.setItem('app_simple_debts', JSON.stringify(clientsData));
+        }
+
+        let productsData = JSON.parse(localStorage.getItem('app_store_products'));
+        if (!productsData || productsData.length === 0) {
+            productsData = defaultProducts;
+            localStorage.setItem('app_store_products', JSON.stringify(productsData));
+        }
+
+        let savedInvoices = JSON.parse(localStorage.getItem('app_saved_invoices')) || [];
+
+        let cart = [];
+        let currentLang = localStorage.getItem('app_lang') || 'ckb';
+        let currentDir = localStorage.getItem('app_dir') || 'rtl';
+        let currentCategoryFilter = 'all';
+
+        window.addEventListener('DOMContentLoaded', () => {
+            switchLanguage(currentLang, currentDir, false);
+            renderDynamicCategoryMenu();
+            renderApp();
+            renderProducts();
+            renderManageProductsList();
+            renderCart();
+        });
+
+        function toggleCategoryMenu() {
+            const menu = document.getElementById('dynamicMenu');
+            menu.classList.toggle('active');
+        }
+
+        function renderDynamicCategoryMenu() {
+            const container = document.getElementById('verticalCategoriesContainer');
+            container.innerHTML = '';
+
+            categoriesList.forEach(cat => {
+                const isActive = currentCategoryFilter === cat.id ? 'active-cat' : '';
+                container.innerHTML += `
+                    <button class="cat-item-btn ${isActive}" onclick="filterCategory('${cat.id}')">
+                        <i class="fa-solid ${cat.icon || 'fa-box'} text-amber-400"></i>
+                        <span>${cat.name}</span>
+                    </button>
+                `;
+            });
+        }
+
+        function filterCategory(catId) {
+            currentCategoryFilter = catId;
+            renderDynamicCategoryMenu();
+            renderProducts();
+            toggleCategoryMenu(); // auto-close on selection for better mobile UX
+        }
+
+        function switchLanguage(langCode, dirValue, save = true) {
+            currentLang = langCode;
+            currentDir = dirValue;
+            if (save) {
+                localStorage.setItem('app_lang', langCode);
+                localStorage.setItem('app_dir', dirValue);
+            }
+
+            const htmlRoot = document.getElementById('htmlRoot');
+            htmlRoot.setAttribute('lang', langCode);
+            htmlRoot.setAttribute('dir', dirValue);
+
+            const langMenuContainer = document.getElementById('langMenuContainer');
+            if (dirValue === 'ltr') {
+                langMenuContainer.className = "fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50";
+            } else {
+                langMenuContainer.className = "fixed bottom-4 left-4 sm:bottom-6 sm:left-6 z-50";
+            }
+
+            const t = translations[langCode];
+            document.getElementById('pageTitle').innerText = t.pageTitle;
+            document.getElementById('txtSysTitle').innerText = t.sysTitle;
+            document.getElementById('txtSysSubtitle').innerText = t.sysSubtitle;
+            document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+            document.getElementById('txtViewReports').innerText = t.viewReports;
+            document.getElementById('txtViewSavedInvoices').innerText = t.viewSavedInvoices;
+            document.getElementById('txtCardTotal').innerText = t.cardTotal;
+            document.getElementById('txtCardTotalSub').innerText = t.cardTotalSub;
+            document.getElementById('txtCardPaid').innerText = t.cardPaid;
+            document.getElementById('txtCardPaidSub').innerText = t.cardPaidSub;
+            document.getElementById('txtCardRemaining').innerText = t.cardRemaining;
+            document.getElementById('txtCardRemainingSub').innerText = t.cardRemainingSub;
+            document.getElementById('txtPosTitle').innerText = t.posTitle;
+            document.getElementById('txtPosSubtitle').innerText = t.posSubtitle;
+            document.getElementById('txtAddProductBtn').innerText = t.addProductBtn;
+            document.getElementById('txtProductsListTitle').innerHTML = `<i class="fa-solid fa-boxes-stacked text-amber-400"></i> ${t.productsListTitle}`;
+            document.getElementById('txtCartTitle').innerHTML = `<i class="fa-solid fa-cart-shopping text-emerald-400"></i> ${t.cartTitle}`;
+            if(cart.length === 0) document.getElementById('txtEmptyCart').innerText = t.emptyCart;
+            document.getElementById('txtGrandTotalLabel').innerText = t.grandTotalLabel;
+            document.getElementById('txtPrintBtn').innerText = t.printBtn;
+            document.getElementById('txtManagerTitle').innerText = t.managerTitle;
+            document.getElementById('txtManagerSubtitle').innerText = t.managerSubtitle;
+            document.getElementById('txtDebtFormTitle').innerHTML = `1. بەشی قەرزکردن (تۆمارکردن)`;
+            document.getElementById('txtClientNameLabel').innerText = t.clientNameLabel;
+            document.getElementById('txtDebtAmountLabel').innerText = t.debtAmountLabel;
+            document.getElementById('txtDebtNoteLabel').innerText = t.debtNoteLabel;
+            document.getElementById('txtSaveDebtBtn').innerHTML = `<i class="fa-solid fa-plus-circle"></i> <span>${t.saveDebtBtn}</span>`;
+            document.getElementById('txtPaymentFormTitle').innerHTML = `2. بەشی دانەوەی قەرز`;
+            document.getElementById('txtSelectClientLabel').innerText = t.selectClientLabel;
+            document.getElementById('txtSelectClientOpt').innerText = t.selectClientOpt;
+            document.getElementById('txtPaymentAmountLabel').innerText = t.paymentAmountLabel;
+            document.getElementById('txtSavePaymentBtn').innerHTML = `<i class="fa-solid fa-check-to-slot"></i> <span>${t.savePaymentBtn}</span>`;
+            document.getElementById('txtManageProductsTitle').innerHTML = `3. سڕینەوەی بەرهەمەکان`;
+            document.getElementById('txtManageProductsSub').innerText = t.manageProductsSub;
+            document.getElementById('txtModalAddProdTitle').innerText = t.modalAddProdTitle;
+            document.getElementById('txtModalProdNameLabel').innerText = t.modalProdNameLabel;
+            document.getElementById('txtModalProdPriceLabel').innerText = t.modalProdPriceLabel;
+            document.getElementById('txtModalAddBtn').innerText = t.modalAddBtn;
+            document.getElementById('txtCloseBtn1').innerText = t.closeBtn;
+            document.getElementById('txtCloseBtn2').innerText = t.closeBtn;
+            document.getElementById('txtCompModalTitle').innerText = t.compModalTitle;
+            document.getElementById('thCompName').innerText = t.thCompName;
+            document.getElementById('thCompTotal').innerText = t.thCompTotal;
+            document.getElementById('thCompPaid').innerText = t.thCompPaid;
+            document.getElementById('thCompRemaining').innerText = t.thCompRemaining;
+            document.getElementById('printInvTitle').innerText = t.printInvTitle;
+            document.getElementById('printThItem').innerText = t.printThItem;
+            document.getElementById('printThUnit').innerText = t.printThUnit;
+            document.getElementById('printThQty').innerText = t.printThQty;
+            document.getElementById('printThPrice').innerText = t.printThPrice;
+            document.getElementById('printThTotal').innerText = t.printThTotal;
+            document.getElementById('printFooter').innerText = t.printFooter;
+            document.getElementById('txtSavedInvoicesTitle').innerText = translations[currentLang].viewSavedInvoices;
+
+            renderApp();
+            renderManageProductsList();
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+            
+            let filtered = productsData;
+            if (currentCategoryFilter !== 'all') {
+                filtered = productsData.filter(p => (p.category || 'other') === currentCategoryFilter);
+            }
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-xs text-slate-400 py-6">هیچ کاڵایەک لەم بەشەدا نییە.</p>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                grid.innerHTML += `
+                    <div class="bg-slate-900/70 p-3 sm:p-4 rounded-2xl border border-slate-700 flex flex-col justify-between gap-3 shadow-md">
+                        <div>
+                            <h4 class="font-bold text-white text-xs sm:text-sm">${p.name}</h4>
+                            <p class="text-xs text-amber-400 font-extrabold mt-1">${Number(p.price).toLocaleString()} د.ع.</p>
+                        </div>
+                        <div class="flex items-center justify-between border-t border-slate-800 pt-2">
+                            <span class="text-[11px] text-slate-300 font-medium">${currentLang === 'en' ? 'Qty:' : (currentLang === 'ar' ? 'الكمية:' : 'دانە:')}</span>
+                            <div class="flex items-center space-x-1.5 space-x-reverse">
+                                <button onclick="changeCartQty(${p.id}, -1)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-rose-400 flex items-center justify-center font-bold cursor-pointer"><i class="fa-solid fa-minus text-xs"></i></button>
+                                <span class="text-xs font-extrabold text-amber-300 px-2">${getCartQty(p.id)}</span>
+                                <button onclick="changeCartQty(${p.id}, 1)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-400 flex items-center justify-center font-bold cursor-pointer"><i class="fa-solid fa-plus text-xs"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function renderManageProductsList() {
+            const listContainer = document.getElementById('manageProductsList');
+            if (!listContainer) return;
+            listContainer.innerHTML = '';
+
+            if (productsData.length === 0) {
+                listContainer.innerHTML = `<p class="text-xs text-slate-400 text-center py-2">هیچ بەرهەمێک نییە.</p>`;
+                return;
+            }
+
+            productsData.forEach(p => {
+                listContainer.innerHTML += `
+                    <div class="flex justify-between items-center text-xs bg-slate-800/60 p-2.5 rounded-xl border border-slate-700">
+                        <div>
+                            <span class="font-bold text-white block">${p.name}</span>
+                            <span class="text-[10px] text-amber-300">${Number(p.price).toLocaleString()} د.ع.</span>
+                        </div>
+                        <button onclick="deleteProduct(${p.id})" class="bg-rose-600/80 hover:bg-rose-600 text-white font-bold px-3 py-1.5 rounded-lg transition text-xs flex items-center gap-1 cursor-pointer">
+                            <i class="fa-solid fa-trash text-[10px]"></i>
+                            <span>${translations[currentLang].deleteBtnText}</span>
+                        </button>
+                    </div>
+                `;
+            });
+        }
+
+        function deleteProduct(productId) {
+            productId = Number(productId);
+            productsData = productsData.filter(p => Number(p.id) !== productId);
+            localStorage.setItem('app_store_products', JSON.stringify(productsData));
+            cart = cart.filter(item => Number(item.id) !== productId);
+
+            renderProducts();
+            renderManageProductsList();
+            renderCart();
+        }
+
+        function getCartQty(productId) {
+            productId = Number(productId);
+            let item = cart.find(i => Number(i.id) === productId);
+            return item ? item.qty : 0;
+        }
+
+        function changeCartQty(productId, change) {
+            productId = Number(productId);
+            let product = productsData.find(p => Number(p.id) === productId);
+            if (!product) return;
+
+            let item = cart.find(i => Number(i.id) === productId);
+
+            if (item) {
+                item.qty += change;
+                if (item.qty <= 0) {
+                    cart = cart.filter(i => Number(i.id) !== productId);
+                }
+            } else if (change > 0) {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            renderProducts();
+            renderCart();
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItemsContainer');
+            const totalEl = document.getElementById('cartTotalPrice');
+            if (!container || !totalEl) return;
+
+            container.innerHTML = '';
+
+            if (!cart || cart.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">${translations[currentLang].emptyCart}</p>`;
+                totalEl.innerText = '0 د.ع.';
+                return;
+            }
+
+            let grandTotal = 0;
+            cart.forEach(item => {
+                let itemPrice = Number(item.price) || 0;
+                let itemQty = Number(item.qty) || 0;
+                let totalItemPrice = itemPrice * itemQty;
+                grandTotal += totalItemPrice;
+
+                container.innerHTML += `
+                    <div class="flex justify-between items-center text-xs bg-slate-800/80 p-3 rounded-xl border border-slate-700 shadow-sm">
+                        <div>
+                            <span class="font-bold text-white text-xs block">${item.name}</span>
+                            <span class="text-[11px] text-amber-300 font-semibold">${itemQty} × ${itemPrice.toLocaleString()} د.ع.</span>
+                        </div>
+                        <span class="font-extrabold text-emerald-400 text-xs sm:text-sm">${totalItemPrice.toLocaleString()} د.ع.</span>
+                    </div>
+                `;
+            });
+
+            totalEl.innerText = grandTotal.toLocaleString() + ' د.ع.';
+        }
+
+        function printCartInvoice() {
+            if (cart.length === 0) {
+                alert(currentLang === 'en' ? 'Cart is empty!' : (currentLang === 'ar' ? 'السلة فارغة!' : 'سەبەتە بەتاڵە بۆ چاپکردن!'));
+                return;
+            }
+
+            let clientNameInput = document.getElementById('cartClientName').value.trim() || 'مشتری گشتی';
+            let clientPhoneInput = document.getElementById('cartClientPhone').value.trim() || '---';
+
+            const printTableBody = document.getElementById('printTableBody');
+            const printSubtotal = document.getElementById('printSubtotal');
+            const printGrandTotal = document.getElementById('printGrandTotal');
+            const printReceived = document.getElementById('printReceived');
+            const printDue = document.getElementById('printDue');
+            const printDate = document.getElementById('printDate');
+            const printInvoiceNum = document.getElementById('printInvoiceNum');
+            const printClientName = document.getElementById('printClientName');
+            const printClientPhone = document.getElementById('printClientPhone');
+            
+            printTableBody.innerHTML = '';
+            let grandTotal = 0;
+            const nowStr = new Date().toLocaleString('en-GB');
+            const invoiceNumber = Math.floor(10000 + Math.random() * 90000);
+
+            printDate.innerText = nowStr;
+            printInvoiceNum.innerText = invoiceNumber;
+            printClientName.innerText = clientNameInput;
+            printClientPhone.innerText = clientPhoneInput;
+
+            let newInvoiceRecord = {
+                id: invoiceNumber,
+                date: nowStr,
+                clientName: clientNameInput,
+                clientPhone: clientPhoneInput,
+                items: JSON.parse(JSON.stringify(cart)),
+                total: 0
+            };
+
+            cart.forEach((item, index) => {
+                let itemPrice = Number(item.price) || 0;
+                let itemQty = Number(item.qty) || 0;
+                let itemTotal = itemPrice * itemQty;
+                grandTotal += itemTotal;
+
+                printTableBody.innerHTML += `
+                    <tr style="border-bottom: 1px solid #cbd5e1;">
+                        <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">${index + 1}</td>
+                        <td style="padding: 6px; border: 1px solid #cbd5e1;">${item.name}</td>
+                        <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">piece</td>
+                        <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">${itemQty}</td>
+                        <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: center;">${itemPrice.toLocaleString()} د.ع.</td>
+                        <td style="padding: 6px; border: 1px solid #cbd5e1; text-align: left;">${itemTotal.toLocaleString()} د.ع.</td>
+                    </tr>
+                `;
+            });
+
+            newInvoiceRecord.total = grandTotal;
+            savedInvoices.push(newInvoiceRecord);
+            localStorage.setItem('app_saved_invoices', JSON.stringify(savedInvoices));
+
+            const formattedTotal = grandTotal.toLocaleString() + ' د.ع.';
+            printSubtotal.innerText = formattedTotal;
+            printGrandTotal.innerText = formattedTotal;
+            printReceived.innerText = formattedTotal;
+            printDue.innerText = '0 د.ع.';
+
+            window.print();
+        }
+
+        function openSavedInvoicesModal() {
+            document.getElementById('savedInvoiceSearch').value = '';
+            renderSavedInvoicesList('');
+            const modal = document.getElementById('savedInvoicesModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function renderSavedInvoicesList(searchQuery = '') {
+            const listContainer = document.getElementById('savedInvoicesList');
+            listContainer.innerHTML = '';
+
+            let filteredInvoices = savedInvoices;
+            if (searchQuery.trim() !== '') {
+                const q = searchQuery.toLowerCase().trim();
+                filteredInvoices = savedInvoices.filter(inv => 
+                    inv.clientName.toLowerCase().includes(q) || 
+                    String(inv.id).includes(q) ||
+                    (inv.clientPhone && inv.clientPhone.includes(q))
+                );
+            }
+
+            if (!filteredInvoices || filteredInvoices.length === 0) {
+                listContainer.innerHTML = `<p class="text-center text-slate-400 py-6">هیچ وەسڵێکی سەیفکراو نەدۆزراوەوە.</p>`;
+                return;
+            }
+
+            filteredInvoices.slice().reverse().forEach((inv) => {
+                let itemsHtml = '';
+                inv.items.forEach(i => {
+                    itemsHtml += `<li class="text-xs text-slate-300">• ${i.name} (${i.qty} دانە بە ${Number(i.price).toLocaleString()} د.ع.)</li>`;
+                });
+
+                listContainer.innerHTML += `
+                    <div class="bg-slate-800/70 p-4 rounded-2xl border border-slate-700 space-y-2 shadow-md relative">
+                        <div class="flex justify-between items-center border-b border-slate-700 pb-2">
+                            <div>
+                                <span class="font-bold text-amber-400 text-sm block">ژمارەی وەسڵ: #${inv.id}</span>
+                                <span class="text-xs text-blue-300 font-semibold block">کڕیار: ${inv.clientName || 'مشتری گشتی'}</span>
+                                <span class="text-[11px] text-slate-400">تەلەفۆن: ${inv.clientPhone || '---'}</span>
+                            </div>
+                            <div class="flex items-center space-x-3 space-x-reverse">
+                                <span class="text-xs text-slate-400">${inv.date}</span>
+                                <button onclick="deleteSavedInvoice(${inv.id})" title="سڕینەوەی وەسڵ" class="w-8 h-8 rounded-xl bg-rose-600/20 hover:bg-rose-600 text-rose-400 hover:text-white transition flex items-center justify-center cursor-pointer">
+                                    <i class="fa-solid fa-trash text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <ul class="space-y-1 py-1">
+                            ${itemsHtml}
+                        </ul>
+                        <div class="flex justify-between items-center pt-2 border-t border-slate-700 text-xs font-extrabold">
+                            <span class="text-slate-200">کۆی گشتی:</span>
+                            <span class="text-emerald-400 text-sm">${Number(inv.total).toLocaleString()} د.ع.</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function deleteSavedInvoice(invoiceId) {
+            if (confirm("ئایا دڵنیایت لە سڕینەوەی ئەم وەسڵە؟")) {
+                savedInvoices = savedInvoices.filter(inv => Number(inv.id) !== Number(invoiceId));
+                localStorage.setItem('app_saved_invoices', JSON.stringify(savedInvoices));
+                renderSavedInvoicesList(document.getElementById('savedInvoiceSearch').value);
+            }
+        }
+
+        function closeSavedInvoicesModal() {
+            document.getElementById('savedInvoicesModal').classList.remove('flex');
+            document.getElementById('savedInvoicesModal').classList.add('hidden');
+        }
+
+        function openAddProductModal() {
+            document.getElementById('addProductModal').classList.remove('hidden');
+            document.getElementById('addProductModal').classList.add('flex');
+        }
+        function closeAddProductModal() {
+            document.getElementById('addProductModal').classList.remove('flex');
+            document.getElementById('addProductModal').classList.add('hidden');
+        }
+        
+        function handleAddNewProduct(e) {
+            e.preventDefault();
+            const name = document.getElementById('newProdName').value.trim();
+            const price = parseFloat(document.getElementById('newProdPrice').value);
+            const catInput = document.getElementById('newProdCategory').value.trim();
+
+            let catId = 'other';
+            if (catInput !== '') {
+                catId = catInput.toLowerCase().replace(/\s+/g, '_');
+                let existingCat = categoriesList.find(c => c.id === catId || c.name === catInput);
+                if (!existingCat) {
+                    categoriesList.push({
+                        id: catId,
+                        name: catInput,
+                        icon: 'fa-tags'
+                    });
+                    localStorage.setItem('app_categories_list', JSON.stringify(categoriesList));
+                    renderDynamicCategoryMenu();
+                } else {
+                    catId = existingCat.id;
+                }
+            }
+
+            productsData.push({
+                id: Date.now(),
+                name: name,
+                price: price,
+                category: catId
+            });
+
+            localStorage.setItem('app_store_products', JSON.stringify(productsData));
+            renderProducts();
+            renderManageProductsList();
+            closeAddProductModal();
+            document.getElementById('addProductForm').reset();
+            alert(currentLang === 'en' ? 'Product added successfully!' : (currentLang === 'ar' ? 'تم إضافة المنتج بنجاح!' : 'بەرهەمەکە بە سەرکەوتوویی زیادکرا!'));
+        }
+
+        function handleAddDebt(e) {
+            e.preventDefault();
+            const name = document.getElementById('clientName').value.trim();
+            const amount = parseFloat(document.getElementById('debtAmount').value);
+            const note = document.getElementById('debtNote').value.trim();
+
+            let existing = clientsData.find(c => c.name.toLowerCase() === name.toLowerCase());
+            if (existing) {
+                existing.totalDebt += amount;
+            } else {
+                clientsData.push({
+                    id: Date.now(),
+                    name: name,
+                    totalDebt: amount,
+                    paidAmount: 0,
+                    note: note || '-'
+                });
+            }
+
+            saveAndRefresh();
+            document.getElementById('debtForm').reset();
+        }
+
+        function handlePayment(e) {
+            e.preventDefault();
+            const clientId = document.getElementById('paymentClientSelect').value;
+            const payAmount = parseFloat(document.getElementById('paymentAmount').value);
+
+            let client = clientsData.find(c => c.id == clientId);
+            if (client) {
+                client.paidAmount += payAmount;
+                saveAndRefresh();
+                document.getElementById('paymentForm').reset();
+            }
+        }
+
+        function saveAndRefresh() {
+            localStorage.setItem('app_simple_debts', JSON.stringify(clientsData));
+            renderApp();
+        }
+
+        let currentSearchQuery = '';
+
+        function handleSearch(query) {
+            currentSearchQuery = query.toLowerCase().trim();
+            renderApp();
+        }
+
+        function renderApp() {
+            const select = document.getElementById('paymentClientSelect');
+            select.innerHTML = `<option value="">${translations[currentLang].selectClientOpt}</option>`;
+
+            let grandTotalDebt = 0;
+            let grandTotalPaid = 0;
+            let grandTotalRemaining = 0;
+
+            clientsData.forEach(c => {
+                let remaining = c.totalDebt - c.paidAmount;
+                grandTotalDebt += c.totalDebt;
+                grandTotalPaid += c.paidAmount;
+                grandTotalRemaining += remaining;
+
+                if (remaining > 0) {
+                    const opt = document.createElement('option');
+                    opt.value = c.id;
+                    opt.innerText = `${c.name} (${currentLang === 'en' ? 'Remaining: ' : (currentLang === 'ar' ? 'المتبقي: ' : 'ماوە: ')}${remaining.toLocaleString()} د.ع.)`;
+                    select.appendChild(opt);
+                }
+            });
+
+            document.getElementById('statTotalDebt').innerText = grandTotalDebt.toLocaleString() + ' د.ع.';
+            document.getElementById('statTotalPaid').innerText = grandTotalPaid.toLocaleString() + ' د.ع.';
+            document.getElementById('statRemaining').innerText = grandTotalRemaining.toLocaleString() + ' د.ع.';
+
+            // Handle live search results for client debts
+            const liveContainer = document.getElementById('liveSearchResultsContainer');
+            const liveGrid = document.getElementById('liveSearchResultsGrid');
+            const searchCount = document.getElementById('searchResultCount');
+
+            if (currentSearchQuery !== '') {
+                let matchedClients = clientsData.filter(c => c.name.toLowerCase().includes(currentSearchQuery));
+                liveContainer.classList.remove('hidden');
+                liveGrid.innerHTML = '';
+                searchCount.innerText = `${matchedClients.length} ئەنجام`;
+
+                if (matchedClients.length === 0) {
+                    liveGrid.innerHTML = `<p class="col-span-full text-center text-slate-400 py-4">هیچ کەسێک بەو ناوە نەدۆزراوەوە</p>`;
+                } else {
+                    matchedClients.forEach(c => {
+                        let remaining = c.totalDebt - c.paidAmount;
+                        liveGrid.innerHTML += `
+                            <div class="bg-slate-900/90 p-4 rounded-2xl border border-blue-500/40 space-y-2 shadow-lg">
+                                <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+                                    <h4 class="font-extrabold text-white text-sm">${c.name}</h4>
+                                    <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-0.5 rounded-md">${c.note || '-'}</span>
+                                </div>
+                                <div class="space-y-1 text-xs">
+                                    <div class="flex justify-between"><span class="text-slate-400">کۆی گشتی قەرز:</span> <span class="font-bold text-blue-400">${c.totalDebt.toLocaleString()} د.ع.</span></div>
+                                    <div class="flex justify-between"><span class="text-slate-400">پارەی دراوەتەوە:</span> <span class="font-bold text-emerald-400">${c.paidAmount.toLocaleString()} د.ع.</span></div>
+                                    <div class="flex justify-between border-t border-slate-800 pt-1 font-extrabold"><span class="text-slate-200">قەرزی ماوە:</span> <span class="text-rose-400 text-sm">${remaining.toLocaleString()} د.ع.</span></div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+            } else {
+                liveContainer.classList.add('hidden');
+            }
+        }
+
+        function openReportModal(type) {
+            const modal = document.getElementById('reportModal');
+            const title = document.getElementById('modalTitle');
+            const content = document.getElementById('modalContent');
+            
+            content.innerHTML = '';
+            let targetList = currentSearchQuery ? clientsData.filter(c => c.name.toLowerCase().includes(currentSearchQuery)) : clientsData;
+
+            if (targetList.length === 0) {
+                content.innerHTML = `<p class="text-center text-slate-400 py-4">هیچ داتایەک نەدۆزراوەوە</p>`;
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+                return;
+            }
+
+            if (type === 'total') {
+                title.innerText = translations[currentLang].cardTotal;
+                targetList.forEach(c => {
+                    content.innerHTML += `
+                        <div class="bg-slate-800/60 p-3 rounded-xl flex justify-between items-center border border-slate-700">
+                            <div>
+                                <span class="font-bold text-white block">${c.name}</span>
+                                <span class="text-[10px] text-slate-400">${c.note}</span>
+                            </div>
+                            <span class="text-blue-400 font-semibold">${c.totalDebt.toLocaleString()} د.ع.</span>
+                        </div>
+                    `;
+                });
+            } else if (type === 'paid') {
+                title.innerText = translations[currentLang].cardPaid;
+                targetList.forEach(c => {
+                    content.innerHTML += `
+                        <div class="bg-slate-800/60 p-3 rounded-xl flex justify-between items-center border border-slate-700">
+                            <span class="font-bold text-white">${c.name}</span>
+                            <span class="text-emerald-400 font-semibold">${c.paidAmount.toLocaleString()} د.ع.</span>
+                        </div>
+                    `;
+                });
+            } else if (type === 'remaining') {
+                title.innerText = translations[currentLang].cardRemaining;
+                targetList.forEach(c => {
+                    let rem = c.totalDebt - c.paidAmount;
+                    content.innerHTML += `
+                        <div class="bg-slate-800/60 p-3 rounded-xl flex justify-between items-center border border-slate-700">
+                            <span class="font-bold text-white">${c.name}</span>
+                            <span class="text-rose-400 font-semibold">${rem.toLocaleString()} د.ع.</span>
+                        </div>
+                    `;
+                });
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeReportModal() {
+            document.getElementById('reportModal').classList.remove('flex');
+            document.getElementById('reportModal').classList.add('hidden');
+        }
+
+        function openComprehensiveReportModal() {
+            const modal = document.getElementById('comprehensiveModal');
+            const tbody = document.getElementById('comprehensiveTableBody');
+            tbody.innerHTML = '';
+
+            let targetList = currentSearchQuery ? clientsData.filter(c => c.name.toLowerCase().includes(currentSearchQuery)) : clientsData;
+
+            if (targetList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="text-center text-slate-400 py-6">هیچ داتایەک نەدۆزراوەوە</td></tr>`;
+            } else {
+                targetList.forEach(c => {
+                    let remaining = c.totalDebt - c.paidAmount;
+                    tbody.innerHTML += `
+                        <tr class="hover:bg-slate-800/40 transition">
+                            <td class="p-3">
+                                <span class="font-bold text-white block">${c.name}</span>
+                                <span class="text-[11px] text-slate-400">${c.note}</span>
+                            </td>
+                            <td class="p-3 text-blue-400 font-semibold">${c.totalDebt.toLocaleString()} د.ع.</td>
+                            <td class="p-3 text-emerald-400 font-semibold">${c.paidAmount.toLocaleString()} د.ع.</td>
+                            <td class="p-3 text-rose-400 font-bold">${remaining.toLocaleString()} د.ع.</td>
+                        </tr>
+                    `;
+                });
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeComprehensiveModal() {
+            document.getElementById('comprehensiveModal').classList.remove('flex');
+            document.getElementById('comprehensiveModal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
